@@ -85,11 +85,13 @@ class Compiler
     {
         $global       = $this->config['global'];
         $globalsArray = var_export($global, TRUE);
+        $salt = hash('sha256', implode('.', array($path, microtime())));
         $settings = "<?php\n";
         $settings .= "extract($globalsArray);";
         foreach($this->config['ini'] as $directive => $value) {
             $settings .= "ini_set($directive, $value);";
         }
+        $settings .= "\$drupal_hash_salt='$salt';";
         file_put_contents($path, $settings);
     }
 

@@ -1,0 +1,12 @@
+{
+  "databases": {
+      "default": {
+          "default": {
+              "database": "myDB",
+              "username": "DBA",
+              "password": "PASS",
+              "driver": "mysql"
+          }
+      }
+  }
+}

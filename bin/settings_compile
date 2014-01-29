@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/../bootstrap.php';
+$usage = "usage: settings_compile path/to/drupal/confd path/to/compiled/settings";
+$args = array_slice($argv, 1);
+if (count($args) !== 2) {
+  echo $usage . "\n";
+  exit(1);
+}
+
+foreach ($args as $key => $arg) {
+  if ('/' !== substr($arg, 0, 1)) {
+    $args[$key] = getcwd()."/$arg";
+  }
+}
+list($confd, $settings) = $args;
+
+$compiler = new Drupal\Settings\Compiler($confd);
+$compiler->write($settings);

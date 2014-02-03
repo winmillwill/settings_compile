@@ -4,19 +4,19 @@ namespace Drupal\Settings;
 
 class Compiler
 {
-    public $globals = [
-      'databases',
-      'cookie_domain',
-      'conf',
-      'installed_profile',
-      'update_free_access',
-      'db_url',
-      'db_prefix',
-      'drupal_hash_salt',
-      'is_https',
-      'base_secure_url',
-      'base_insecure_url'
-    ];
+  public $globals = array(
+    'databases',
+    'cookie_domain',
+    'conf',
+    'installed_profile',
+    'update_free_access',
+    'db_url',
+    'db_prefix',
+    'drupal_hash_salt',
+    'is_https',
+    'base_secure_url',
+    'base_insecure_url'
+  );
 
     public $confPath;
 

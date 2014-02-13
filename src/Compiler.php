@@ -91,7 +91,7 @@ class Compiler
           $setting = "\$$globalName=";
           $setting .= is_array($globalValue)
             ? var_export($globalValue, TRUE)
-            : $globalValue;
+            : "\"$globalValue\"";
           $settings .= "$setting;";
         }
         foreach($this->config['ini'] as $iniDirective => $iniValue) {

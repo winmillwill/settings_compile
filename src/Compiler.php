@@ -83,15 +83,20 @@ class Compiler
 
     function write($path)
     {
-        $global       = $this->config['global'];
-        $globalsArray = var_export($global, TRUE);
-        $salt = hash('sha256', implode('.', array($path, microtime())));
+        $globalsArray = $this->config['global'];
+        $salt         = hash('sha256', implode('.', array($path, microtime())));
+        $globalsArray['drupal_hash_salt'] = $salt;
         $settings = "<?php\n";
-        $settings .= "extract($globalsArray);";
-        foreach($this->config['ini'] as $directive => $value) {
-            $settings .= "ini_set($directive, $value);";
+        foreach ($globalsArray as $globalName => $globalValue) {
+          $setting = "\$$globalName=";
+          $setting .= is_array($globalValue)
+            ? var_export($globalValue, TRUE)
+            : $globalValue;
+          $settings .= "$setting;";
         }
-        $settings .= "\$drupal_hash_salt='$salt';";
+        foreach($this->config['ini'] as $iniDirective => $iniValue) {
+            $settings .= "ini_set($iniDirective, $iniValue);";
+        }
         file_put_contents($path, $settings);
     }
 

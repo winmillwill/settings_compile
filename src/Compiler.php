@@ -85,10 +85,10 @@ class Compiler
 
     function loadIncludeDirectives()
     {
-      $this->includeDirectives = json_decode(
-        file_get_contents($this->includes),
-        TRUE
-      );
+        $json = file_exists($this->includes)
+            ? file_get_contents($this->includes)
+            : '{}';
+        $this->includeDirectives = json_decode($json, TRUE);
     }
 
     function write($path)

@@ -97,6 +97,8 @@ class Compiler
         $salt         = hash('sha256', implode('.', array($path, microtime())));
         $globalsArray['drupal_hash_salt'] = $salt;
         $settings = "<?php\n";
+        // dumb ass kludge to deal with immediate need.
+        $settings .= '$DRUPAL_ROOT=DRUPAL_ROOT';
         foreach ($globalsArray as $globalName => $globalValue) {
           $setting = "\$$globalName=";
           $setting .= is_array($globalValue)

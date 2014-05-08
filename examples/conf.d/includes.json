@@ -1,3 +1,5 @@
 {
-    "include": "DRUPAL_ROOT/../vendor/autoload.php"
+    "include": [
+        "DRUPAL_ROOT/../vendor/autoload.php"
+    ]
 }

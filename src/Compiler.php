@@ -107,8 +107,10 @@ class Compiler
         foreach ($this->config['ini'] as $iniDirective => $iniValue) {
             $settings .= "ini_set($iniDirective, $iniValue);";
         }
-        foreach ($this->includeDirectives as $type => $includePath) {
-            $settings .= "$type \"$includePath\";";
+        foreach ($this->includeDirectives as $type => $includes) {
+            foreach ($includes as $includePath) {
+                $settings .= "$type \"$includePath\";";
+            }
         }
         file_put_contents($path, $settings);
     }

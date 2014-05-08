@@ -25,6 +25,7 @@ class Compiler
         $this->confPath     = $confPath;
         $this->globalsConfD = $confPath . '/globals.conf.d';
         $this->iniConfD     = $confPath . '/ini.conf.d';
+        $this->includes     = $confPath . '/includes.json';
         $this->load();
     }
 
@@ -32,6 +33,7 @@ class Compiler
     {
         $this->loadIniDirectives();
         $this->loadGlobalJson();
+        $this->loadIncludeDirectives();
     }
 
     function loadGlobalJson()
@@ -81,6 +83,14 @@ class Compiler
         extract($config);
     }
 
+    function loadIncludeDirectives()
+    {
+      $this->includeDirectives = json_decode(
+        file_get_contents($this->includes),
+        TRUE
+      );
+    }
+
     function write($path)
     {
         $globalsArray = $this->config['global'];
@@ -94,8 +104,11 @@ class Compiler
             : "\"$globalValue\"";
           $settings .= "$setting;";
         }
-        foreach($this->config['ini'] as $iniDirective => $iniValue) {
+        foreach ($this->config['ini'] as $iniDirective => $iniValue) {
             $settings .= "ini_set($iniDirective, $iniValue);";
+        }
+        foreach ($this->includeDirectives as $type => $includePath) {
+            $settings .= "$type \"$includePath\";";
         }
         file_put_contents($path, $settings);
     }

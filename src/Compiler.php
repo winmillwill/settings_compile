@@ -38,10 +38,10 @@ class Compiler
             $db['driver']   = $dbURL['scheme'];
             $db['username'] = $dbURL['user'];
             $db['password'] = $dbURL['pass'];
-            $db['database'] = $dbURL['path'];
+            $db['database'] = trim($dbURL['path'], '/');
             $db['host']     = $dbURL['host'];
         }
-        $salt = hash('sha256', implode('.', array($path, microtime())));
+        $salt = hash('sha256', implode('.', array(getcwd(), microtime())));
         $this->config['settings']['drupal_hash_salt'] = $salt;
     }
 

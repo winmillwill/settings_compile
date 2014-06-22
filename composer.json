@@ -6,6 +6,10 @@
             "email": "wa.milton@gmail.com"
         }
     ],
+    "require": {
+        "symfony/config": "*",
+        "symfony/yaml": "*"
+    },
     "require-dev": {
         "phpunit/phpunit": "*"
     },

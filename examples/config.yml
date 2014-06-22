@@ -1,0 +1,9 @@
+drupal:
+  settings:
+    databases:
+      default:
+        default:
+          database: dbNAME
+          username: dbUSER
+          password: dbPASS
+          driver: mysql

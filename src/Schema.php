@@ -13,15 +13,18 @@ class Schema implements ConfigurationInterface
         $rootNode = $treeBuilder->root('drupal');
         $rootNode->children()
             ->variableNode('settings')
-              ->treatNullLike(array())
+                ->treatNullLike(array())
+            ->end()
+            ->scalarNode('db_url')
+                ->defaultValue(null)
             ->end()
             ->variableNode('ini')
-              ->treatNullLike(array())
-              ->defaultValue(array())
+                ->treatNullLike(array())
+                ->defaultValue(array())
             ->end()
             ->variableNode('include')
-              ->treatNullLike(array())
-              ->defaultValue(array())
+                ->treatNullLike(array())
+                ->defaultValue(array())
             ->end();
         return $treeBuilder;
     }

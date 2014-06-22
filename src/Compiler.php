@@ -30,10 +30,24 @@ class Compiler
         $this->config = $processor->processConfiguration(new Schema(), $config);
     }
 
-    function write($path)
+    function settingsPreprocess()
     {
+        if (isset($this->config['settings']['database_url'])) {
+            $db = &$this->config['settings']['databases']['default']['default'];
+            $dbURL = parse_url($this->config['settings']['database_url']);
+            $db['driver']   = $dbURL['scheme'];
+            $db['username'] = $dbURL['user'];
+            $db['password'] = $dbURL['pass'];
+            $db['database'] = $dbURL['path'];
+            $db['host']     = $dbURL['host'];
+        }
         $salt = hash('sha256', implode('.', array($path, microtime())));
         $this->config['settings']['drupal_hash_salt'] = $salt;
+    }
+
+    function write($path)
+    {
+        $this->settingsPreprocess();
         $settings = "<?php\n";
         // dumb ass kludge to deal with immediate need.
         $settings .= '$DRUPAL_ROOT=DRUPAL_ROOT;';

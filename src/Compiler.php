@@ -32,9 +32,9 @@ class Compiler
 
     function settingsPreprocess()
     {
-        if (isset($this->config['settings']['database_url'])) {
+        if (isset($this->config['settings']['db_url'])) {
             $db = &$this->config['settings']['databases']['default']['default'];
-            $dbURL = parse_url($this->config['settings']['database_url']);
+            $dbURL = parse_url($this->config['settings']['db_url']);
             $db['driver']   = $dbURL['scheme'];
             $db['username'] = $dbURL['user'];
             $db['password'] = $dbURL['pass'];

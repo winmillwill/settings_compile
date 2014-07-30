@@ -1,5 +1,6 @@
 drupal:
   settings:
+    db_url: "mysql://user:pass@localhost/db"
     databases:
       default:
         default:

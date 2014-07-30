@@ -49,8 +49,6 @@ class Compiler
     {
         $this->settingsPreprocess();
         $settings = "<?php\n";
-        // dumb ass kludge to deal with immediate need.
-        $settings .= '$DRUPAL_ROOT=DRUPAL_ROOT;';
         foreach ($this->config['settings'] as $settingName => $settingValue) {
           $setting = "\$$settingName=";
           $setting .= is_array($settingValue)

@@ -10,11 +10,11 @@ if (count($args) !== 2) {
 }
 
 foreach ($args as $key => $arg) {
-  if ('/' !== substr($arg, 0, 1)) {
+  if ('/' !== $arg[0]) {
     $args[$key] = getcwd()."/$arg";
   }
 }
-list($confd, $settings) = $args;
+list($config, $settings) = $args;
 
-$compiler = new Drupal\Settings\Compiler($confd);
+$compiler = new Drupal\Settings\Compiler($config);
 $compiler->write($settings);

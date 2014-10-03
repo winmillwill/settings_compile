@@ -13,6 +13,11 @@
     "require-dev": {
         "phpunit/phpunit": "*"
     },
+    "extra": {
+      "branch-alias": {
+         "dev-master": "2.0.x-dev"
+      }
+    },
     "autoload": {
         "psr-4": {
             "Drupal\\Settings\\": "src/"

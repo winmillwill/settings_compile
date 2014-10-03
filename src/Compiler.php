@@ -45,7 +45,7 @@ class Compiler
           $settings .= "$setting;";
         }
         foreach ($this->config['ini'] as $iniDirective => $iniValue) {
-            $settings .= "ini_set($iniDirective, $iniValue);";
+            $settings .= "ini_set('$iniDirective', '$iniValue');";
         }
         foreach ($this->config['include'] as $type => $includes) {
             foreach ($includes as $includePath) {

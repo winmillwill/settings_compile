@@ -119,8 +119,3 @@ This makes setting up for your PAAS simple, though it does begin to beg the
 question as to whether you gain anything by using yaml instead of just
 versioning the php file and letting another system manage setting the
 environment variables, as described above in [Motivation](#motivation).
-
-## Roadmap
-
-* Support use of php constants in the yaml file
-* Support use of Environment Variables in the yaml file

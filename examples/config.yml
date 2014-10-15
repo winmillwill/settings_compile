@@ -1,5 +1,6 @@
 drupal:
   settings:
+    # note that db_url will override databases['default']['default']
     db_url: "mysql://user:pass@localhost/db"
     databases:
       default:
@@ -8,3 +9,8 @@ drupal:
           username: dbUSER
           password: dbPASS
           driver: mysql
+  include:
+    require:
+      - %DRUPAL_ROOT . '/sites/default/vendor/autoload.php'
+  ini:
+    error_reporting: %E_ALL

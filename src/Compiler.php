@@ -41,8 +41,6 @@ class Compiler
             $db['database'] = trim($dbURL['path'], '/');
             $db['host']     = $dbURL['host'];
         }
-        $salt = hash('sha256', implode('.', array(getcwd(), microtime())));
-        $this->config['settings']['drupal_hash_salt'] = $salt;
     }
 
     function write($path)
@@ -52,18 +50,42 @@ class Compiler
         foreach ($this->config['settings'] as $settingName => $settingValue) {
           $setting = "\$$settingName=";
           $setting .= is_array($settingValue)
-            ? var_export($settingValue, TRUE)
-            : "\"$settingValue\"";
+            ? $this->writeArray($settingValue)
+            : $this->quote($settingValue);
           $settings .= "$setting;";
         }
         foreach ($this->config['ini'] as $iniDirective => $iniValue) {
-            $settings .= "ini_set('$iniDirective', '$iniValue');";
+            $settings .= "ini_set({$this->quote($iniDirective)}, {$this->quote($iniValue)});";
         }
         foreach ($this->config['include'] as $type => $includes) {
             foreach ($includes as $includePath) {
-                $settings .= "$type \"$includePath\";";
+                $settings .= "$type {$this->quote($includePath)};";
             }
         }
         file_put_contents($path, $settings);
+    }
+
+    function writeArray($array)
+    {
+        $arrayString = 'array(';
+        foreach ($array as $key => $value) {
+            $arrayString .= $this->quote($key)
+                . ' => '
+                . $this->quote($value)
+                . ',';
+        }
+        $arrayString .= ')';
+        return $arrayString;
+    }
+
+    function quote($value)
+    {
+        if (is_array($value)) {
+            return $this->writeArray($value);
+        }
+        if (!in_array($value[0], array('$', '%'))) {
+            return '\'' . $value . '\'';
+        }
+        return str_replace('%', '', $value);
     }
 }

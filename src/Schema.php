@@ -28,6 +28,7 @@ class Schema implements ConfigurationInterface
                     ->scalarNode('is_https')->end()
                     ->scalarNode('base_secure_url')->end()
                     ->scalarNode('base_insecure_url')->end()
+                    ->scalarNode('base_url')->end()
                     ->booleanNode('update_free_access')->end()
                 ->end()
             ->end()
